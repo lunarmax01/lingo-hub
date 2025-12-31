@@ -5,3 +5,7 @@
 #S05{ 
    transition: all 0.5s;
 }
+
+#BgHero{
+   background-image: url('my-project/src/assets/01.png');
+}

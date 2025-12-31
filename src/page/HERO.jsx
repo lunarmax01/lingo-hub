@@ -43,7 +43,7 @@ const HERO = () => {
                 transition-transform duration-500
                 hover:scale-105
               "
-              style={{ backgroundImage: "url('/src/assets/01.png')" }}
+                id="BgHero"
             />
           </div>
 
