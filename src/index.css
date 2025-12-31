@@ -2,19 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-#S05{ 
+/* Barcha o‘zgarishlar uchun transition */
+#S05 { 
    transition: all 0.5s;
 }
 
-#BgHero{
-   background-image: url('../src/assets/01.png');
-};
-/* #BgEngilish{
-   background-image: url('../src/assets/English_Learning.png');
-};
-#BgEngilish{
-   background-image: url('../src/assets/01.png');
-};
-#BgEngilish{
-   background-image: url('../src/assets/01.png');
-}; */
+/* Hero background */
+#BgHero {
+   /* public/assets ichiga joylang */
+   background-image: url('./src/assets/01.png');
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+/* English Learning background */
+#BgEngilish {
+   /* public/assets ichiga joylang */
+   background-image: url('./public/English_Learning.png');
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+/* Agar boshqa background kerak bo‘lsa */
+#BgOnline {
+   background-image: url('./public/Online_Learning.png');
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+#BgTogether {
+   background-image: url('./public/Learning_Together.png');
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}

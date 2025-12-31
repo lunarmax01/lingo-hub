@@ -30,16 +30,16 @@ const About = () => {
         {/* Right Column: Background Divs */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
           <div
+          id="BgEngilish"
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('./public/English_Learning.png')" }}
           />
           <div
+          id="BgOnline"
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('./public/Online_Learning.png')" }}
           />
           <div
+            id="BgTogether"
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 col-span-2 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('./public/Learning_Together.png')" }}
           />
         </div>
       </div>
