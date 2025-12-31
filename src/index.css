@@ -7,5 +7,5 @@
 }
 
 #BgHero{
-   background-image: url('my-project/src/assets/01.png');
+   background-image: url('../src/assets/01.png');
 }

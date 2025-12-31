@@ -43,7 +43,7 @@ const HERO = () => {
                 transition-transform duration-500
                 hover:scale-105
               "
-                id="BgHero"
+              id="BgHero"
             />
           </div>
 
