@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#S05{ 
+   transition: all 0.5s;
+}
