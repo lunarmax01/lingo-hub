@@ -31,15 +31,15 @@ const About = () => {
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
           <div
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('/assets/English_Learning.png')" }}
+            style={{ backgroundImage: "url('../src/assets/English_Learning.png')" }}
           />
           <div
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('/assets/Online_Learning.png')" }}
+            style={{ backgroundImage: "url('../src/assets/Online_Learning.png')" }}
           />
           <div
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 col-span-2 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('/assets/Learning_Together.png')" }}
+            style={{ backgroundImage: "url('../src/assets/Learning_Together.png')" }}
           />
         </div>
       </div>
