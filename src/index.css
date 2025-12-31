@@ -15,27 +15,23 @@
    background-position: center;
    background-repeat: no-repeat;
 }
-
-/* English Learning background */
 #BgEngilish {
-   /* public/assets ichiga joylang */
-   background-image: url('./public/English_Learning.png');
-   background-size: cover;
-   background-position: center;
-   background-repeat: no-repeat;
+    background-image: url('/English_Learning.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* Agar boshqa background kerak bo‘lsa */
 #BgOnline {
-   background-image: url('./public/Online_Learning.png');
-   background-size: cover;
-   background-position: center;
-   background-repeat: no-repeat;
+    background-image: url('/Online_Learning.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #BgTogether {
-   background-image: url('./public/Learning_Together.png');
-   background-size: cover;
-   background-position: center;
-   background-repeat: no-repeat;
+    background-image: url('/Learning_Together.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
