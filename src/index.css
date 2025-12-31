@@ -14,7 +14,7 @@
    background-size: cover;
    background-position: center;
    background-repeat: no-repeat;
-}
+};
 #BgEngilish {
     background-image: url('https://i.pinimg.com/1200x/e6/65/f1/e665f1e8d82a543835930caee38c3f46.jpg');
     background-size: cover;
@@ -23,14 +23,14 @@
 }
 
 #BgOnline {
-    background-image: url('/Online_Learning.png');
+    background-image: url('https://i.pinimg.com/1200x/3e/c1/77/3ec177f1918c0d3c753c0aaa39c08acf.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 #BgTogether {
-    background-image: url('/Learning_Together.png');
+    background-image: url('https://i.pinimg.com/736x/27/2c/d3/272cd3f655355fff99612e2c5eec4fed.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
