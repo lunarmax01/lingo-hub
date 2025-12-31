@@ -1,8 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const About = () => {
   return (
-    <section id="about" className="min-h-screen flex flex-col items-center justify-center p-6 sm:p-10 bg-purple-50">
+    <section
+      id="about"
+      className="min-h-screen flex flex-col items-center justify-center p-6 sm:p-10 bg-purple-50"
+    >
       {/* Section Title */}
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#7F1D8A] mb-8 sm:mb-12 text-center">
         About Lingo Hub
@@ -28,15 +31,15 @@ const About = () => {
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
           <div
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('../src/assets/English_Learning.png')" }}
+            style={{ backgroundImage: "url('/assets/English_Learning.png')" }}
           />
           <div
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('src/assets/Online_Learning.png')" }}
+            style={{ backgroundImage: "url('/assets/Online_Learning.png')" }}
           />
           <div
             className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 col-span-2 w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: "url('src/assets/Learning_Together.png')" }}
+            style={{ backgroundImage: "url('/assets/Learning_Together.png')" }}
           />
         </div>
       </div>
