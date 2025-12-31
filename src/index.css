@@ -2,13 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-#S05{ 
+/* Optional transition class */
+#S05 { 
    transition: all 0.5s;
 }
 
-#BgHero{
-   background-image: url('../src/assets/01.png');
-};
+/* Hero background */
+#BgHero {
+   background-image: url('../src/assets/01.png'); /* Local file uchun */
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+/* English Learning */
 #BgEngilish {
     background-image: url('https://i.pinimg.com/1200x/e6/65/f1/e665f1e8d82a543835930caee38c3f46.jpg');
     background-size: cover;
@@ -16,6 +23,7 @@
     background-repeat: no-repeat;
 }
 
+/* Online Learning */
 #BgOnline {
     background-image: url('https://i.pinimg.com/1200x/3e/c1/77/3ec177f1918c0d3c753c0aaa39c08acf.jpg');
     background-size: cover;
@@ -23,6 +31,7 @@
     background-repeat: no-repeat;
 }
 
+/* Learning Together */
 #BgTogether {
     background-image: url('https://i.pinimg.com/736x/27/2c/d3/272cd3f655355fff99612e2c5eec4fed.jpg');
     background-size: cover;
