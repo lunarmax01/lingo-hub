@@ -2,18 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Barcha o‘zgarishlar uchun transition */
-#S05 { 
+#S05{ 
    transition: all 0.5s;
 }
 
-/* Hero background */
-#BgHero {
-   /* public/assets ichiga joylang */
-   background-image: url('./src/assets/01.png');
-   background-size: cover;
-   background-position: center;
-   background-repeat: no-repeat;
+#BgHero{
+   background-image: url('../src/assets/01.png');
 };
 #BgEngilish {
     background-image: url('https://i.pinimg.com/1200x/e6/65/f1/e665f1e8d82a543835930caee38c3f46.jpg');
