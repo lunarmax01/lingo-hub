@@ -24,22 +24,19 @@ const About = () => {
           </p>
         </div>
 
-        {/* Right Column: Images */}
+        {/* Right Column: Background Divs */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
-          <img 
-            src="../src/assets/English_Learning.png" 
-            alt="English Learning" 
-            className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full object-cover"
+          <div
+            className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-48 bg-cover bg-center"
+            style={{ backgroundImage: "url('../src/assets/English_Learning.png')" }}
           />
-          <img 
-            src="../src/assets/Online_Learning.png" 
-            alt="Online Learning" 
-            className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full object-cover"
+          <div
+            className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-48 bg-cover bg-center"
+            style={{ backgroundImage: "url('src/assets/Online_Learning.png')" }}
           />
-          <img 
-            src="../src/assets/Learning_Together.png" 
-            alt="Learning Together" 
-            className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 col-span-2 w-full object-cover"
+          <div
+            className="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 col-span-2 w-full h-48 bg-cover bg-center"
+            style={{ backgroundImage: "url('src/assets/Learning_Together.png')" }}
           />
         </div>
       </div>
