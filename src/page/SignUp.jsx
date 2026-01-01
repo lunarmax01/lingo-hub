@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const [form, setForm] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
     email: "",
-    password: ""
+    password: "",
+    repassword: ""
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,11 +21,9 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      const res = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
@@ -30,13 +31,39 @@ const SignUp = () => {
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message);
+      if (!res.ok) throw new Error(data.message || "Error");
 
-      setSuccess("Account created successfully 🎉");
-      setForm({ name: "", email: "", password: "" });
+      // ✅ Success toast
+      toast.success("🎉 Account created successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+
+      setForm({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        password: "",
+        repassword: ""
+      });
 
     } catch (err) {
-      setError(err.message);
+      // ❌ Error toast
+      toast.error(err.message || "Something went wrong", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
     } finally {
       setLoading(false);
     }
@@ -46,21 +73,36 @@ const SignUp = () => {
     <div className="min-h-screen flex items-center justify-center bg-purple-50">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-2xl shadow-xl w-[350px] flex flex-col gap-4"
+        className="bg-white p-8 rounded-2xl shadow-xl w-[400px] flex flex-col gap-4"
       >
         <h2 className="text-2xl font-bold text-center text-[#7F1D8A]">
           Create account
         </h2>
 
         <input
-          name="name"
-          placeholder="Full name"
-          value={form.name}
+          name="firstName"
+          placeholder="First Name"
+          value={form.firstName}
           onChange={handleChange}
           className="border rounded-lg px-4 py-2"
           required
         />
-
+        <input
+          name="lastName"
+          placeholder="Last Name"
+          value={form.lastName}
+          onChange={handleChange}
+          className="border rounded-lg px-4 py-2"
+          required
+        />
+        <input
+          name="phone"
+          placeholder="Phone"
+          value={form.phone}
+          onChange={handleChange}
+          className="border rounded-lg px-4 py-2"
+          required
+        />
         <input
           name="email"
           type="email"
@@ -70,7 +112,6 @@ const SignUp = () => {
           className="border rounded-lg px-4 py-2"
           required
         />
-
         <input
           name="password"
           type="password"
@@ -80,9 +121,15 @@ const SignUp = () => {
           className="border rounded-lg px-4 py-2"
           required
         />
-
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        {success && <p className="text-green-600 text-sm">{success}</p>}
+        <input
+          name="repassword"
+          type="password"
+          placeholder="Confirm Password"
+          value={form.repassword}
+          onChange={handleChange}
+          className="border rounded-lg px-4 py-2"
+          required
+        />
 
         <button
           disabled={loading}
@@ -90,6 +137,9 @@ const SignUp = () => {
         >
           {loading ? "Creating..." : "Sign Up"}
         </button>
+
+        {/* Toast container */}
+        <ToastContainer />
       </form>
     </div>
   );

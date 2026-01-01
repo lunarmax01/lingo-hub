@@ -1,6 +1,7 @@
-// Login.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,28 +14,56 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", { // backend login endpoint
+      const res = await fetch("http://localhost:5000/api/auth/signin", { // backend login endpoint
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
+
       if (res.ok) {
-        // Login muvaffaqiyatli
-        localStorage.setItem("token", data.token); // agar token qaytsa
-        alert("Login muvaffaqiyatli!");
-        navigate("/"); // bosh sahifaga yo'naltirish
+        // ✅ Login muvaffaqiyatli
+        localStorage.setItem("token", data.token); // token saqlash
+        toast.success("✅ Login muvaffaqiyatli!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+
+        setTimeout(() => {
+          navigate("/"); // bosh sahifaga yo'naltirish
+        }, 1500); // 1.5s kutib yo'naltirish, toast ko‘rinishi uchun
       } else {
-        // Xato bo'lsa
-        alert(data.message || "Login xatolik!");
+        // ❌ Xato bo'lsa
+        toast.error(data.message || "Login xatolik!", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
       }
     } catch (error) {
       console.error(error);
-      alert("Server bilan bog'lanishda xato!");
+      toast.error("Server bilan bog'lanishda xato!", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -70,6 +99,9 @@ const Login = () => {
         >
           {loading ? "Loading..." : "Login"}
         </button>
+
+        {/* Toast container */}
+        <ToastContainer />
       </form>
     </div>
   );
