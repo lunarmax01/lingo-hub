@@ -14,7 +14,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/signin", { // backend login endpoint
+      const res = await fetch("http://localhost:5000/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -23,11 +23,13 @@ const Login = () => {
       const data = await res.json();
 
       if (res.ok) {
-        // ✅ Login muvaffaqiyatli
-        localStorage.setItem("token", data.token); // token saqlash
+        // ✅ Token saqlash
+        localStorage.setItem("token", data.token);
+
+        // ✅ Success toast
         toast.success("✅ Login muvaffaqiyatli!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -35,9 +37,10 @@ const Login = () => {
           theme: "colored",
         });
 
+        // 2 soniya kutib Dashboard ga yo'naltirish
         setTimeout(() => {
-          navigate("/"); // bosh sahifaga yo'naltirish
-        }, 1500); // 1.5s kutib yo'naltirish, toast ko‘rinishi uchun
+          navigate("/dashboard");
+        }, 2000);
       } else {
         // ❌ Xato bo'lsa
         toast.error(data.message || "Login xatolik!", {
