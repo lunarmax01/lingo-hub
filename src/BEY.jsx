@@ -13,7 +13,6 @@ import Login from "./page/Login";
 // Private pages
 import Dashboard from "./page_in_login/Dashboard";
 import Courses from "./page_in_login/Courses";
-import Profile from "./page_in_login/Profile";
 import AdminPanel from "./page_in_login/AdminPanel";
 
 // Private utils
@@ -105,18 +104,6 @@ const BEY = () => {
               <ProtectedRoute>
                 <motion.main {...pageTransition}>
                   <Courses />
-                </motion.main>
-              </ProtectedRoute>
-            }
-          />
-
-          {/* PROFILE - PROTECTED */}
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <motion.main {...pageTransition}>
-                  <Profile />
                 </motion.main>
               </ProtectedRoute>
             }

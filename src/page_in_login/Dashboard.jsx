@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaUser, FaBookOpen, FaClipboardList, FaGraduationCap, FaTachometerAlt } from "react-icons/fa";
+import { FaUser, FaGraduationCap, FaTachometerAlt } from "react-icons/fa";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Backend endpoint: token bilan user ma'lumotini olish
+  // Fetch user data from backend
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
 
       const res = await fetch("http://localhost:5000/api/auth/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!res.ok) throw new Error("User data olishda xato!");
+      if (!res.ok) throw new Error("Error fetching user data!");
 
       const data = await res.json();
       setUser(data.user);
@@ -42,11 +40,9 @@ const Dashboard = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-[#7F1D8A]">
-            Salom, {user.firstName}!
-          </h1>
+          <h1 className="text-3xl font-bold text-[#7F1D8A]">Hello, {user.firstName}!</h1>
           <p className="text-gray-700 mt-1">
-            O‘rganish statusi: <span className="font-semibold">{user.learningStatus}</span>
+            Learning Status: <span className="font-semibold">{user.learningStatus}</span>
           </p>
         </div>
 
@@ -63,41 +59,34 @@ const Dashboard = () => {
       </div>
 
       {/* Stats cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
-          <FaBookOpen className="text-purple-600 text-3xl mb-2" />
-          <span className="text-gray-500 text-sm">Kurslar soni</span>
-          <span className="font-bold text-xl mt-1">{user.courses?.length || 0}</span>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
-          <FaClipboardList className="text-purple-600 text-3xl mb-2" />
-          <span className="text-gray-500 text-sm">Progress</span>
-          <span className="font-bold text-xl mt-1">
-            {user.courses?.length
-              ? Math.round(user.courses.reduce((sum, c) => sum + c.progress, 0) / user.courses.length)
-              : 0}%
-          </span>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
-          <FaGraduationCap className="text-purple-600 text-3xl mb-2" />
-          <span className="text-gray-500 text-sm">Yakunlangan kurslar</span>
+          <span className="text-gray-500 text-sm">Completed Offline Courses</span>
           <span className="font-bold text-xl mt-1">
             {user.courses?.filter(c => c.progress === 100).length || 0}
           </span>
         </div>
         <div className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
+          <FaGraduationCap className="text-purple-600 text-3xl mb-2" />
+          <span className="text-gray-500 text-sm">Total Offline Courses</span>
+          <span className="font-bold text-xl mt-1">{user.courses?.length || 0}</span>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
           <FaUser className="text-purple-600 text-3xl mb-2" />
-          <span className="text-gray-500 text-sm">Rol</span>
+          <span className="text-gray-500 text-sm">Role</span>
           <span className="font-bold text-xl mt-1">{user.role}</span>
         </div>
       </div>
 
-      {/* Courses cards */}
-      <h2 className="text-2xl font-semibold mb-4">Sizning kurslaringiz</h2>
+      {/* Offline Courses cards */}
+      <h2 className="text-2xl font-semibold mb-4">Your Offline Courses</h2>
       {user.courses && user.courses.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {user.courses.map((c) => (
-            <div key={c._id} className="bg-white rounded-lg shadow p-4 flex flex-col justify-between hover:scale-105 transition transform">
+            <div
+              key={c._id}
+              className="bg-white rounded-lg shadow p-4 flex flex-col justify-between hover:scale-105 transition transform"
+            >
               <h3 className="font-semibold text-lg mb-2">{c.title}</h3>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-gray-500 text-sm">{c.progress}% completed</span>
@@ -112,13 +101,13 @@ const Dashboard = () => {
                 to={`/courses/${c._id}`}
                 className="mt-auto bg-[#7F1D8A] text-white py-2 rounded-full text-center hover:bg-purple-800 transition"
               >
-                Ko‘rish
+                View
               </Link>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-gray-500">Siz hali biron kursga yozilmadingiz.</p>
+        <p className="text-gray-500">You haven't enrolled in any offline course yet.</p>
       )}
     </div>
   );
