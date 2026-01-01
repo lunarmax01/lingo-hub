@@ -1,113 +1,95 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { FaUser, FaGraduationCap, FaTachometerAlt } from "react-icons/fa";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
+  const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch user data from backend
-  const fetchUserData = async () => {
+  // Fetch user info and enrolled offline courses
+  const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) return;
+      if (!token) {
+        setError("No token found. Please login.");
+        setLoading(false);
+        return;
+      }
 
-      const res = await fetch("http://localhost:5000/api/auth/me", {
+      // Fetch user info
+      const resUser = await fetch("http://localhost:5000/api/auth/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
+      if (!resUser.ok) throw new Error("Failed to fetch user info");
+      const dataUser = await resUser.json();
+      setUser(dataUser.user);
 
-      if (!res.ok) throw new Error("Error fetching user data!");
-
-      const data = await res.json();
-      setUser(data.user);
+      // Fetch enrolled offline courses
+      const resCourses = await fetch("http://localhost:5000/api/courses/enrolled-offline", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!resCourses.ok) throw new Error("Failed to fetch courses");
+      const dataCourses = await resCourses.json();
+      setCourses(dataCourses.courses || []);
     } catch (err) {
       console.error(err);
-      setUser(null);
+      setError(err.message || "An error occurred.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUserData();
+    fetchData();
   }, []);
 
-  if (loading) return <p className="text-center mt-20 text-lg">Loading...</p>;
-  if (!user) return <p className="text-center mt-20 text-red-500">User not found. Please login again.</p>;
+  if (loading) return <p className="text-center mt-20 text-lg text-purple-700">Loading...</p>;
+  if (error) return <p className="text-center mt-20 text-red-500">{error}</p>;
+  if (!user) return <p className="text-center mt-20 text-red-500">User not found.</p>;
 
   return (
-    <div className="min-h-screen bg-purple-50 p-6">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-[#7F1D8A]">Hello, {user.firstName}!</h1>
-          <p className="text-gray-700 mt-1">
-            Learning Status: <span className="font-semibold">{user.learningStatus}</span>
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-purple-50 via-purple-100 to-purple-200 p-6">
+      <h1 className="text-4xl font-bold text-[#7F1D8A] mb-8 text-center">Welcome, {user.firstName}!</h1>
 
-        <div className="flex mt-4 md:mt-0 gap-3">
-          {user.role === "admin" && (
-            <Link
-              to="/admin"
-              className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-full shadow hover:bg-red-600 transition"
-            >
-              <FaTachometerAlt /> Admin Panel
-            </Link>
-          )}
-        </div>
-      </div>
-
-      {/* Stats cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
-          <span className="text-gray-500 text-sm">Completed Offline Courses</span>
-          <span className="font-bold text-xl mt-1">
-            {user.courses?.filter(c => c.progress === 100).length || 0}
-          </span>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
-          <FaGraduationCap className="text-purple-600 text-3xl mb-2" />
-          <span className="text-gray-500 text-sm">Total Offline Courses</span>
-          <span className="font-bold text-xl mt-1">{user.courses?.length || 0}</span>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
-          <FaUser className="text-purple-600 text-3xl mb-2" />
-          <span className="text-gray-500 text-sm">Role</span>
-          <span className="font-bold text-xl mt-1">{user.role}</span>
-        </div>
-      </div>
-
-      {/* Offline Courses cards */}
-      <h2 className="text-2xl font-semibold mb-4">Your Offline Courses</h2>
-      {user.courses && user.courses.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {user.courses.map((c) => (
+      {courses.length === 0 ? (
+        <p className="text-center text-purple-700 text-lg">You are not enrolled in any offline courses yet.</p>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {courses.map((course) => (
             <div
-              key={c._id}
-              className="bg-white rounded-lg shadow p-4 flex flex-col justify-between hover:scale-105 transition transform"
+              key={course.id}
+              className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-1"
             >
-              <h3 className="font-semibold text-lg mb-2">{c.title}</h3>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-gray-500 text-sm">{c.progress}% completed</span>
-                <div className="w-1/2 bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-purple-600 h-2 rounded-full"
-                    style={{ width: `${c.progress}%` }}
-                  ></div>
-                </div>
-              </div>
-              <Link
-                to={`/courses/${c._id}`}
-                className="mt-auto bg-[#7F1D8A] text-white py-2 rounded-full text-center hover:bg-purple-800 transition"
-              >
-                View
-              </Link>
+              <h2 className="text-2xl font-semibold text-purple-800 mb-4">{course.name}</h2>
+
+              {course.lessons.length === 0 ? (
+                <p className="text-gray-500">No lessons yet.</p>
+              ) : (
+                <ul className="space-y-2">
+                  {course.lessons.map((lesson, idx) => (
+                    <li
+                      key={idx}
+                      className="flex justify-between items-center bg-purple-50 px-3 py-2 rounded-md"
+                    >
+                      <span>{lesson.name}</span>
+                      <span
+                        className={`font-bold ${
+                          lesson.completed ? "text-green-600" : "text-gray-400"
+                        }`}
+                      >
+                        {lesson.completed ? "✅" : "❌"}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {course.grade && (
+                <p className="mt-4 text-right text-purple-700 font-semibold">Grade: {course.grade}</p>
+              )}
             </div>
           ))}
         </div>
-      ) : (
-        <p className="text-gray-500">You haven't enrolled in any offline course yet.</p>
       )}
     </div>
   );

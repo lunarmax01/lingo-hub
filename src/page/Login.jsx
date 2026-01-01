@@ -14,7 +14,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/signin", {
+      const res = await fetch("http://localhost:5001/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -27,29 +27,25 @@ const Login = () => {
         localStorage.setItem("token", data.token);
 
         // ✅ Success toast
-        toast.success("✅ Login muvaffaqiyatli!", {
+        toast.success(`✅ Welcome, ${data.user.firstName}!`, {
           position: "top-right",
           autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
           theme: "colored",
         });
 
-        // 2 soniya kutib Dashboard ga yo'naltirish
+        // 🔹 Role bo‘yicha yo‘naltirish
         setTimeout(() => {
-          navigate("/dashboard");
+          if (data.user.role === "admin") {
+            navigate("/admin");      // admin panelga
+          } else {
+            navigate("/dashboard");  // user dashboardga
+          }
         }, 2000);
       } else {
         // ❌ Xato bo'lsa
         toast.error(data.message || "Login xatolik!", {
           position: "top-right",
           autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
           theme: "colored",
         });
       }
@@ -58,10 +54,6 @@ const Login = () => {
       toast.error("Server bilan bog'lanishda xato!", {
         position: "top-right",
         autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
         theme: "colored",
       });
     } finally {
@@ -103,7 +95,6 @@ const Login = () => {
           {loading ? "Loading..." : "Login"}
         </button>
 
-        {/* Toast container */}
         <ToastContainer />
       </form>
     </div>
